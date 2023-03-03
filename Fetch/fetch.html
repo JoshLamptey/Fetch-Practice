@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;1,100;1,200&family=Roboto+Mono:ital,wght@0,100;0,200;0,300;1,100;1,200&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Raleway", sans-serif;
+        text-align: center;
+      }
+      #btn1 {
+        width: 6rem;
+        height: 2rem;
+        font-size: 1rem;
+        border: none;
+        border-radius: 5px;
+        transition: all 1s;
+      }
+      #btn1:hover {
+        background-color: rgb(192, 190, 176);
+      }
+      .posts:hover {
+        text-decoration: underline;
+      }
+      #contents {
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="btn1">Refresh</button>
+    <div id="container"><h2 class="posts">Posts</h2></div>
+  </body>
+  <script>
+    document.getElementById("btn1").addEventListener("click", getPosts);
+
+    function getPosts() {
+      fetch("https://jsonplaceholder.typicode.com/posts")
+        .then((res) => res.json())
+        .then((data) => {
+          let container = "";
+          data.forEach((post) => {
+            container += `
+            
+      <h1>${post.title}</h1>
+      <p id = "contents">${post.body}</p>
+            `;
+          });
+          document.getElementById("container").innerHTML = container;
+        });
+    }
+  </script>
+</html>

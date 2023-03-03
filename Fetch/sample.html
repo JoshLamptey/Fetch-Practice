@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sample(fetch practice)</title>
+    <script
+      src="https://kit.fontawesome.com/1a603544d5.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;1,100;1,200&family=Roboto+Mono:ital,wght@0,100;0,200;0,300;1,100;1,200&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Raleway", sans-serif;
+        background-color: #14171a;
+        color: #dddada;
+      }
+      .header {
+        text-align: center;
+      }
+      #refresh {
+        width: 5rem;
+        height: 2rem;
+        font-size: 1.1rem;
+        border: none;
+        background: #dad7d7;
+        color: #1f1f5e;
+        border-radius: 5px;
+        transition: all 1.5s;
+      }
+      #refresh:hover {
+        background: #1f1f5e;
+        color: #dad7d7;
+      }
+      .head:hover {
+        text-decoration: underline;
+      }
+      #output h3 {
+        text-align: center;
+      }
+      #output article {
+        color: rgb(255, 246, 246);
+        font-weight: 599;
+      }
+      .icons {
+        text-align: center;
+      }
+      i {
+        margin-left: 2rem;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.8s;
+      }
+      #icon3:hover {
+        color: crimson;
+      }
+      #icon2:hover {
+        color: rgb(14, 110, 14);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <button id="refresh">Refresh</button>
+      <h1 class="head">Posts</h1>
+    </div>
+
+    <div id="output">
+      <br />
+      <div class="icons">
+        <i class="fa-regular fa-comment" id="icon1"></i>
+        <i class="fa-sharp fa-solid fa-repeat" id="icon2"></i>
+        <i class="fa-solid fa-heart" id="icon3"></i>
+      </div>
+    </div>
+  </body>
+  <script>
+    document.getElementById("icon3").addEventListener("click", (event) => {
+      let heart = event.target;
+      heart.style.color = "crimson";
+    });
+
+    document.getElementById("icon2").addEventListener("click", (event) => {
+      let heart = event.target;
+      heart.style.color = "rgb(14, 110, 14)";
+    });
+
+    document.getElementById("refresh").addEventListener("click", GetPosts);
+
+    function GetPosts() {
+      fetch("https://jsonplaceholder.typicode.com/posts")
+        .then((res) => res.json())
+        .then((data) => {
+          let output = "";
+          data.forEach((post) => {
+            output += ` 
+            <hr />
+          <h3 class="heading">${post.title}</h3>
+          <article class="content">${post.body}</article>
+      <br />
+      <div class="icons">
+        <i class="fa-regular fa-comment" id="icon1"></i>
+        <i class="fa-sharp fa-solid fa-repeat" id="icon2"></i>
+        <i class="fa-solid fa-heart" id="icon3"></i>
+        <hr />`;
+          });
+          document.getElementById("output").innerHTML = output;
+        });
+    }
+    
+   window.onscroll=()=>{
+   if(window.innerHeight + window.scrollY >=document.body.offsetHeight){
+    GetPosts()
+   }
+   }
+
+  </script>
+</html>
